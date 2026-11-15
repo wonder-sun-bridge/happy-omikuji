@@ -1,4 +1,61 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>今日のハッピーおみくじ | Wonder Sun Bridge</title><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(ellipse at top,#fff8dd,#eee3cd);font-family:'BIZ UDPGothic','Yu Gothic',sans-serif;color:#65432e;padding:24px}main{width:min(100%,460px);text-align:center;background:#fffdf5;border:1px solid #c9a66a;border-radius:24px;padding:28px 22px;box-shadow:0 12px 40px #79553520}small{letter-spacing:.13em;color:#856b42}h1{font-size:clamp(24px,6vw,32px);margin:18px 0}#art{height:145px;display:grid;place-items:center;font-size:82px}#rank{font-size:34px;color:#ad463b;font-weight:bold;margin:8px}#msg{font-size:23px;font-weight:bold;line-height:1.6}p{line-height:1.8}#extra{border-top:1px solid #decba5;padding:12px 0;font-size:16px}button{display:block;width:100%;border:0;border-radius:30px;background:#a83f35;color:white;font:inherit;font-weight:bold;padding:15px;margin-top:12px;cursor:pointer}button.secondary{background:#fffdf5;color:#795535;border:1px solid #bba176}footer{margin-top:24px;font-size:12px;color:#856b42}button:focus-visible{outline:3px solid #bc9c50;outline-offset:3px}[hidden]{display:none!important}</style></head><body><main><small>WONDER SUN BRIDGE</small><h1>今日のハッピーおみくじ</h1><div id="art" aria-hidden="true">🎋</div><section aria-live="polite"><div id="rank"></div><div id="msg">今日のあなたに、小さな幸せを。</div><p id="detail">どんなメッセージが届くかな？</p><div id="extra" hidden></div></section><button id="draw">おみくじを引く</button><button id="share" class="secondary" hidden>結果を共有する</button><button id="copy" class="secondary" hidden>結果をコピー</button><p id="status" role="status"></p><footer>あなたの今日が、笑顔であふれますように。<br>© Wonder Sun Bridge<br>遊びとして楽しむおみくじです。</footer></main><script>
+
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>今日のハッピーおみくじ | Wonder Sun Bridge</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(ellipse at top,#fff8dd,#eee3cd);font-family:'BIZ UDPGothic','Yu Gothic',sans-serif;color:#65432e;padding:24px}
+main{width:min(100%,460px);text-align:center;background:#fffdf5;border:1px solid #c9a66a;border-radius:24px;padding:28px 22px;box-shadow:0 12px 40px #79553520}
+small{letter-spacing:.13em;color:#856b42}
+h1{font-size:clamp(24px,6vw,32px);margin:18px 0}
+#art{height:145px;display:grid;place-items:center;font-size:82px}
+#rank{font-size:34px;color:#ad463b;font-weight:bold;margin:8px}
+#msg{font-size:23px;font-weight:bold;line-height:1.6}
+p{line-height:1.8}
+#extra{border-top:1px solid #decba5;padding:12px 0;font-size:16px}
+button{display:block;width:100%;border:0;border-radius:30px;background:#a83f35;color:white;font:inherit;font-weight:bold;padding:15px;margin-top:12px;cursor:pointer}
+button.secondary{background:#fffdf5;color:#795535;border:1px solid #bba176}
+button:disabled{opacity:.7;cursor:wait}
+footer{margin-top:24px;font-size:12px;color:#856b42}
+button:focus-visible{outline:3px solid #bc9c50;outline-offset:3px}
+[hidden]{display:none!important}
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+@keyframes pop{
+  0%{transform:scale(.3);opacity:0}
+  70%{transform:scale(1.2)}
+  100%{transform:scale(1);opacity:1}
+}
+.spinning{animation:spin .45s linear infinite}
+.popping{animation:pop .5s ease-out}
+@media(prefers-reduced-motion:reduce){
+.spinning,.popping{animation:none}
+}
+</style>
+</head>
+<body>
+<main>
+<small>WONDER SUN BRIDGE</small>
+<h1>今日のハッピーおみくじ</h1>
+<div id="art" aria-hidden="true">🎋</div>
+<section aria-live="polite">
+<div id="rank"></div>
+<div id="msg">今日のあなたに、小さな幸せを。</div>
+<p id="detail">どんなメッセージが届くかな？</p>
+<div id="extra" hidden></div>
+</section>
+<button id="draw">おみくじを引く</button>
+<button id="share" class="secondary" hidden>結果を共有する</button>
+<button id="copy" class="secondary" hidden>結果をコピー</button>
+<p id="status" role="status"></p>
+<footer>あなたの今日が、笑顔であふれますように。<br>© Wonder Sun Bridge<br>遊びとして楽しむおみくじです。</footer>
+</main>
+<script>
 const data=[
 ['大吉','好奇心が、新しい扉を開く日。','小さな挑戦を楽しもう。','四つ葉のクローバー','ゴールド','🍀'],
 ['恋愛大吉','ときめきは、最高の美容液。','大切な人と笑顔を分かち合おう。','小さな鏡','ローズピンク','💕'],
@@ -29,6 +86,64 @@ const data=[
 ['勇気吉','迷いながらでも進める。','できる範囲で一歩だけ。','鍵','銀色','🔑'],
 ['家庭吉','温かな時間を分かち合おう。','身近な人に優しい言葉を。','マグカップ','茶色','🏡'],
 ['夢吉','夢に年齢制限はない。','やりたいことを書いてみよう。','手帳','金色','⭐'],
-['幸せ大吉','今日という日を楽しもう。','あなたらしい笑顔で過ごしてね。','お気に入りの服','虹色','✨']];
-let last=-1;const $=id=>document.getElementById(id);function result(){return '今日のハッピーおみくじ\n'+data[last][0]+'\n'+data[last][1]+'\n'+data[last][2]+'\nラッキーアイテム：'+data[last][3]+'\nラッキーカラー：'+data[last][4]+'\nWonder Sun Bridge'}$('draw').onclick=()=>{let i;do{i=Math.floor(Math.random()*data.length)}while(i===last);last=i;const [r,m,d,item,c,e]=data[i];$('rank').textContent=r;$('msg').textContent=m;$('detail').textContent=d;$('art').textContent=e;$('extra').textContent='ラッキーアイテム：'+item+'　／　ラッキーカラー：'+c;$('extra').hidden=false;$('copy').hidden=false;$('share').hidden=!navigator.share;$('draw').textContent='もう一度引く';$('status').textContent=''}; $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(result());$('status').textContent='コピーしました。LINEなどに貼り付けてね。'}catch{window.prompt('結果をコピーしてください',result())}};$('share').onclick=async()=>{try{await navigator.share({text:result()})}catch(e){if(e.name!=='AbortError')$('status').textContent='共有できませんでした。コピーをお試しください。'}};
-</script></body></html>
+['幸せ大吉','今日という日を楽しもう。','あなたらしい笑顔で過ごしてね。','お気に入りの服','虹色','✨']
+];
+
+let last=-1;
+const $=id=>document.getElementById(id);
+
+function result(){
+return '今日のハッピーおみくじ\n'+data[last][0]+'\n'+data[last][1]+'\n'+data[last][2]+'\nラッキーアイテム：'+data[last][3]+'\nラッキーカラー：'+data[last][4]+'\nWonder Sun Bridge'
+}
+
+$('draw').onclick=()=>{
+$('draw').disabled=true;
+$('draw').textContent='ぐるぐる抽選中…';
+$('rank').textContent='';
+$('msg').textContent='何が出るかな？';
+$('detail').textContent='もう少し待ってね。';
+$('art').textContent='🎋';
+$('art').className='spinning';
+$('extra').hidden=true;
+$('copy').hidden=true;
+$('share').hidden=true;
+$('status').textContent='';
+
+setTimeout(()=>{
+let i;
+do{i=Math.floor(Math.random()*data.length)}while(i===last);
+last=i;
+const [r,m,d,item,c,e]=data[i];
+$('rank').textContent=r;
+$('msg').textContent=m;
+$('detail').textContent=d;
+$('art').textContent=e;
+$('art').className='popping';
+$('extra').textContent='ラッキーアイテム：'+item+'　／　ラッキーカラー：'+c;
+$('extra').hidden=false;
+$('copy').hidden=false;
+$('share').hidden=!navigator.share;
+$('draw').textContent='もう一度引く';
+$('draw').disabled=false;
+},2000);
+};
+
+$('copy').onclick=async()=>{
+try{
+await navigator.clipboard.writeText(result());
+$('status').textContent='コピーしました。LINEなどに貼り付けてね。'
+}catch{
+window.prompt('結果をコピーしてください',result())
+}
+};
+
+$('share').onclick=async()=>{
+try{
+await navigator.share({text:result()})
+}catch(e){
+if(e.name!=='AbortError')$('status').textContent='共有できませんでした。コピーをお試しください。'
+}
+};
+</script>
+</body>
+</html>
